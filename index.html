@@ -7,31 +7,59 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <header id="menutopper">
-        <div class="menutopper-inner">
-          <ul class="menu menu-1">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Search</a></li>
-          </ul>
-          <div class="logo">
-            <img src="docs/images/Risk.svg", alt="Logo">
-            <h1>RiskRadar</h1>
-          </div>
-          <ul class="menu menu-2">
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
+  <header id="menutopper">
+    <div class="menutopper-inner">
+        <div class="logo">
+            <img src="docs/images/Risk.png" alt="Logo">
+        </div> 
+        <button class="navbar-toggler" type="button">☰</button>
+        <div class="navbar-collapse">
+            <ul class="menu menu-1">
+                <li><a href="/capstone/index.html">Home</a></li>
+                <li><a href="/capstone/search.html">Search</a></li>
+                <li><a href="/capstone/about.html">About</a></li>
+                <li><a href="/capstone/contact.html">Contact</a></li>
+            </ul>
         </div>
-      </header>
+    </div>
+  </header>
 
-    <main>
-       
-    </main>
+  <main class = "index">
+    <div class="search">
+        <p>Follow this link to search your URL, to get your report!</p>
+        <a href="/capstone/search.html">Search</a>
+        <div class="additional-content" style="display: none;">
+            <!-- Hidden additional content for search -->
+        </div>
+    </div>
 
-    <footer>
-        <!-- Footer content goes here -->
-    </footer>
+    <div class="features">
+        <p>Application Features - Click here to learn more!</p>
+        <div class="additional-content" style="display: none;">
+            <p>This is an application that takes your url, and maps out your threat landscape. An incredibly useful tool in understanding how to make your organization, safer! </p>
+        </div>
+    </div>
 
+    <div class="threat-landscape">
+        <p>Content for Threat Landscape - Click here to learn more!</p>
+        <div class="additional-content" style="display: none;">
+            <p>What is the threat landscape?</p>
+            <p>How do we define it></p>
+            <p>Why should you care?</p>
+        </div>
+    </div>
+
+    <div class="cvss-feed">
+        <p>CVSS FEED API - Click here to check the latest feed!</p>
+        <div class="additional-content" style="display: none;">
+            <!-- Hidden additional content for CVSS feed -->
+        </div>
+    </div>
+</main>
+
+  <footer>
+    <p>&copy; RiskRadar</p>
+  </footer>
+<script src="index.js"></script>
 </body>
 </html>

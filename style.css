@@ -1,58 +1,235 @@
+/* Root colors */
 :root {
-    --orange: #FFA500;
-    --gunmetal: #2C363F;
-    --isabelline: #F2EFEA;
+  --orange: #FFA500;
+  --gunmetal: #2C363F;
+  --isabelline: #F2EFEA;
+}
+/* Index.html */
+/* Header Section */
+/* Menu list styling */
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  background-color: var(--orange);
 }
 
+/* Menu item styling */
+.menu li {
+  margin: 0 1rem;
+}
+
+/* Header container styling */
+.menutopper-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%; 
+  background-color: var(--orange);
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Navbar toggler button styling */
+.navbar-toggler {
+  position: absolute;
+  right: 50px; /* Adjust right position as needed */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust for exact vertical center */
+  font-size: 1.5em;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Navbar collapse styling */
+.navbar-collapse {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  display: none; /* Initially hidden */
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* Adjust alignment of menu items within the collapsed navbar */
+.navbar-collapse .menu {
+  align-items: flex-end;
+}
+
+/* Styling when navbar is active */
+.navbar-collapse.active {
+  display: flex;
+  background-color: var(--isabelline);
+  color: var(--orange)
+}
+
+/* Logo styling */
+.logo {
+  text-align: center;
+  padding: 10px;
+}
+
+/* Logo image styling */
+.logo img {
+  width: 100px;
+}
+
+/* End of Header and Begin of Body Section */
 body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif; 
-    color: var(--gunmetal);
-  }
-  
-  .menutopper-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--orange);
-  }
-  
-  .menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex: 1 0 30vw;
-    background-color: var(--orange);
-  }
-  
-  .menu li {
-    margin: 0 1rem;
-  }
-  
-  .menu-1 {
-    justify-content: flex-end;
-    background-color: var(--orange);
-  }
-  
-  .logo {
-    flex: 0 1 auto;
-    text-align: center;
-    padding: 10px; 
-  }
-  
-  .logo img {
-    width: 100px;
-  }
-
-  .centered-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; 
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif; 
+  color: var(--gunmetal);
 }
 
-h1 {
-    margin-top:0;
-    color: #F2EFEA;
+.index {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: calc(100vh - 60px);
+  background-color: #2C363F;
+  color: #F2EFEA;
+  padding: 20px;
+}
+
+.features, .threat-landscape, .cvss-feed {
+  border: 1px solid var(--isabelline); 
+  height: 75px;
+  flex-grow: 1;
+  overflow: auto;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--orange);
+  cursor: pointer; /* Change cursor on hover */
+  color: var(--isabelline);
+  width: 80%; 
+  text-align: center;
+  font-size: 18px;
+} 
+
+.additional-content {
+  display: none; 
+  padding: 10px;
+  border-top: 1px solid var(--isabelline); 
+  margin-top: 10px;
+  height: 60px;
+}
+
+.expanded .additional-content {
+  display: block;
+
+}
+
+.search {
+  height: 75px;
+  border: 1px solid var(--isabelline); 
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: var(--orange);
+  color: var(--isabelline );
+  width: 80%; 
+  text-align: center;
+  font-size: 18px;
+}
+
+
+footer {
+  position: fixed; 
+  bottom: 0; 
+  width: 100%; 
+  height: 60px;
+  background-color: #2C363F; 
+  color: var(--isabelline); 
+  text-align: center; 
+  padding: 10px 0; 
+  font-size: 0.8em; 
+}
+
+/* End of Index.html */
+
+/* contact.html */
+
+.contact-us-here{
+  background-color: #2C363F;
+  color: #F2EFEA;
+  padding: 20px;
+}
+
+.contact-form {
+  background-color: #2C363F;
+  color: #F2EFEA;
+  padding: 20px;
+}
+
+.special-heading{
+  text-align: center;
+  text-shadow: #FFA500 1px 3px;
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #FFA500;
+  color: #F2EFEA;
+}
+/* end of contact.html */
+
+/* about.html */
+
+.about {
+  display: grid;
+  background-color: #2C363F;
+  color: #F2EFEA;
+  padding: 20px;
+}
+
+.about-main {
+  margin-top: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 20px; /* Space between columns */
+  padding: 20px;
+}
+
+.about-project, .about-me {
+  background-color: var(--orange);
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* end of about.html */
+
+/* search.html */
+.api-page {
+  display: grid;
+  background-color: #2C363F;
+  color: #F2EFEA;
+  padding: 20px;
+}
+
+.search-form {
+  display: grid;
+  background-color: #2C363F;
+  color: #F2EFEA;
+  padding: 20px;
+}
+
+/* end of search.html */
+@media (max-width: 768px) {
+  .row {
+      flex-direction: column;
+  }
 }

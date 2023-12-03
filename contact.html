@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 8px;
+            vertical-align: top;
+        }
+        .input-field {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="contact-us-here" >
+    <header id="menutopper">
+        <div class="menutopper-inner">
+            <div class="logo">
+                <img src="docs/images/Risk.png" alt="Logo">
+            </div> 
+            <button class="navbar-toggler" type="button">☰</button>
+            <div class="navbar-collapse">
+                <ul class="menu menu-1">
+                    <li><a href="/capstone/index.html">Home</a></li>
+                    <li><a href="/capstone/search.html">Search</a></li>
+                    <li><a href="/capstone/about.html">About</a></li>
+                    <li><a href="/capstone/contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <main class="contact-form">
+        <h1 class="special-heading">Contact Us Here</h1>
+        <form action="/submit-form" method="post">
+            <table>
+                <tr>
+                    <td><label for="name">Name:</label></td>
+                    <td><input type="text" id="name" name="name" class="input-field" required></td>
+                </tr>
+                <tr>
+                    <td><label for="email">Email:</label></td>
+                    <td><input type="email" id="email" name="email" class="input-field" required></td>
+                </tr>
+                <tr>
+                    <td><label for="message">Message:</label></td>
+                    <td><textarea id="message" name="message" class="input-field" required></textarea></td>
+                </tr>
+            </table>
+            <div class="button-container">
+                <input type="submit" value="Send it" class="submit-button">
+            </div>
+        </form>
+    </main>
+    
+    <footer>
+        <p>&copy; RiskRadar</p>
+    </footer>
+<script src="index.js"></script>
+</body>
+</html>
