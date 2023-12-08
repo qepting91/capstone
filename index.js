@@ -1,30 +1,21 @@
-// Event listener for the navbar toggle
-document.querySelector('.navbar-toggler').addEventListener('click', function() {
-    document.querySelector('.navbar-collapse').classList.toggle('active');
-});
+document.addEventListener('DOMContentLoaded', function () {
+  
+    var navbarToggler = document.querySelector('.navbar-toggler');
+    var navbarMenu = document.querySelector('.navbar-collapse');
 
-// Event listeners for expanding and collapsing sections
-document.querySelectorAll('.search, .cvss-feed, .threat-landscape, .features').forEach(item => {
-    item.addEventListener('click', () => {
-        // Check if the clicked box is already open
-        const isOpen = item.classList.contains('expanded');
+    navbarToggler.addEventListener('click', function () {
+        navbarMenu.classList.toggle('active');
+    });
 
-        // Close all open boxes
-        document.querySelectorAll('.cvss-feed, .threat-landscape, .features').forEach(content => {
-            content.classList.remove('expanded'); 
-            let additionalContent = content.querySelector('.additional-content');
-            if (additionalContent) {
-                additionalContent.style.display = 'none';
+    var expandableSections = document.querySelectorAll('.features, .threat-landscape, .cvss-feed');
+
+    expandableSections.forEach(function(section) {
+        section.addEventListener('click', function(event) {
+            
+            if (event.target.tagName !== 'A') {
+                var content = section.querySelector('.additional-content');
+                content.classList.toggle('expanded');
             }
         });
-
-        // If the clicked box was not open, open it
-        if (!isOpen) {
-            item.classList.add('expanded'); 
-            let additionalContent = item.querySelector('.additional-content');
-            if (additionalContent) {
-                additionalContent.style.display = 'block'; 
-            }
-        }
     });
 });
