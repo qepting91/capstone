@@ -1,12 +1,26 @@
-/* Root colors */
+/* =====================================================================
+   Root 
+===================================================================== */
 :root {
-  --orange: #FFA500;
+  --orange: #ffa500;
   --gunmetal: #2C363F;
   --isabelline: #F2EFEA;
+  font-family: 'Roboto', sans-serif;
+
 }
-/* Index.html */
-/* Header Section */
-/* Menu list styling */
+
+/* =====================================================================
+   Global Styles
+===================================================================== */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  color: var(--gunmetal);
+  background-color: var(--isabelline);
+}
+/* =====================================================================
+Header section including the navbar
+===================================================================== */
 .menu {
   list-style: none;
   padding: 0;
@@ -57,88 +71,125 @@
 /* Adjust alignment of menu items within the collapsed navbar */
 .navbar-collapse .menu {
   align-items: flex-end;
+  background-color: var(--gunmetal);
+}
+
+a {
+  color: var(--isabelline); 
 }
 
 /* Styling when navbar is active */
 .navbar-collapse.active {
   display: flex;
-  background-color: var(--isabelline);
-  color: var(--orange)
 }
 
-/* Logo styling */
-.logo {
-  text-align: center;
-  padding: 10px;
-}
-
-/* Logo image styling */
 .logo img {
-  width: 100px;
+  width: 80px;
+  margin: 0 auto;
 }
 
-/* End of Header and Begin of Body Section */
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif; 
-  color: var(--gunmetal);
-}
-
+/* =====================================================================
+   main section of index.html
+===================================================================== */
 .index {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: flex;      
+  flex-direction: column; 
+  flex-grow: 1;
   align-items: center;
-  height: calc(100vh - 60px);
-  background-color: #2C363F;
-  color: #F2EFEA;
-  padding: 20px;
+  justify-content: space-between;
+  width: 85vw;        
+  margin: 0 auto; 
+  padding: 15px;
+  border: 1px solid var var(--orange);
+  border-radius: 8px;    
 }
 
+.search{
+  border: 1px solid var(--isabelline);
+  flex-basis: 75px; 
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--orange);
+  color: var(--gunmetal);
+  width: 85vw; 
+  text-align: center;
+  font-size: 14px;
+}
 .features, .threat-landscape, .cvss-feed {
-  border: 1px solid var(--isabelline); 
-  height: 75px;
-  flex-grow: 1;
+  border: 1px solid var(--isabelline);
   overflow: auto;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: var(--orange);
-  cursor: pointer; /* Change cursor on hover */
-  color: var(--isabelline);
-  width: 80%; 
+  cursor: pointer;
+  color: var(--gunmetal);
+  width: 85vw; 
   text-align: center;
-  font-size: 18px;
-} 
+  font-size: 14px;
+}
 
 .additional-content {
   display: none; 
-  padding: 10px;
-  border-top: 1px solid var(--isabelline); 
-  margin-top: 10px;
-  height: 60px;
 }
 
-.expanded .additional-content {
-  display: block;
+.additional-content.expanded {
+  display: flex;
+  overflow: visible;
+  justify-content: space-between;      
+  flex-direction: column; 
+  flex-grow: 1;
+  align-items: center;
+  justify-content: space-between;
+}
+/* =====================================================================
+   main section of about.html
+===================================================================== */
 
+/* =====================================================================
+   main section of search.html
+===================================================================== */
+
+
+/* =====================================================================
+   contact.html, contact forms
+===================================================================== */
+#fs-frm {
+  max-width: 95%;
+  margin: 0 auto;
+  padding: 15px;
+  background: var(--gunmetal);
+  border: 1px solid var(--orange);
+  border-radius: 8px;
 }
 
-.search {
-  height: 75px;
-  border: 1px solid var(--isabelline); 
+#fs-frm input[type="text"],
+#fs-frm input[type="email"],
+#fs-frm textarea,
+#fs-frm input[type="submit"] {
+  width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
+  margin-bottom: 15px;
+  border: 1px solid var(--gunmetal);
+  border-radius: 4px;
+}
+
+#fs-frm input[type="submit"] {
   background-color: var(--orange);
-  color: var(--isabelline );
-  width: 80%; 
-  text-align: center;
-  font-size: 18px;
+  color: var(--isabelline);
 }
 
+#fs-frm input[type="submit"]:hover {
+  background-color: var(--isabelline);
+  color: var(--gunmetal);
+}
 
+/* =====================================================================
+   Footer Styles
+===================================================================== */
 footer {
   position: fixed; 
   bottom: 0; 
@@ -151,85 +202,24 @@ footer {
   font-size: 0.8em; 
 }
 
-/* End of Index.html */
+/* =====================================================================
+   Media Queries
+===================================================================== */
+@media (min-width: 768px) {
 
-/* contact.html */
+  .logo img {
+    width: 100px;
+  }
 
-.contact-us-here{
-  background-color: #2C363F;
-  color: #F2EFEA;
-  padding: 20px;
-}
+  .menu {
+    flex-direction: row;
+  }
 
-.contact-form {
-  background-color: #2C363F;
-  color: #F2EFEA;
-  padding: 20px;
-}
+  .menu li {
+    margin: 0 1rem;
+  }
 
-.special-heading{
-  text-align: center;
-  text-shadow: #FFA500 1px 3px;
-}
-
-.button-container {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.submit-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #FFA500;
-  color: #F2EFEA;
-}
-/* end of contact.html */
-
-/* about.html */
-
-.about {
-  display: grid;
-  background-color: #2C363F;
-  color: #F2EFEA;
-  padding: 20px;
-}
-
-.about-main {
-  margin-top: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Two equal columns */
-  gap: 20px; /* Space between columns */
-  padding: 20px;
-}
-
-.about-project, .about-me {
-  background-color: var(--orange);
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* end of about.html */
-
-/* search.html */
-.api-page {
-  display: grid;
-  background-color: #2C363F;
-  color: #F2EFEA;
-  padding: 20px;
-}
-
-.search-form {
-  display: grid;
-  background-color: #2C363F;
-  color: #F2EFEA;
-  padding: 20px;
-}
-
-/* end of search.html */
-@media (max-width: 768px) {
-  .row {
-      flex-direction: column;
+  #fs-frm {
+    max-width: 500px;
   }
 }
