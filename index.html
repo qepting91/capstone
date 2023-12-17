@@ -1,66 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RiskRadar</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>RiskRadar</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="menutopper-inner">
-        <div class="logo">
-            <img src="docs/images/Risk.png" alt="Logo">
-        </div> 
-        <button class="navbar-toggler" type="button">☰</button>
-        <div class="navbar-collapse">
-            <ul class="menu menu-1">
-                <li><a href="/capstone/index.html">Home</a></li>
-                <li><a href="/capstone/search.html">Search</a></li>
-                <li><a href="/capstone/about.html">About</a></li>
-                <li><a href="/capstone/contact.html">Contact</a></li>
-            </ul>
-        </div>
-    </div>
-  </header>
-
-  <main class = "index">
-    <div class="search">
-        <p>Follow this link to search your URL, to get your report!</p>
-        <a href="/capstone/search.html">Search</a>
-        <div class="additional-content" >
-        </div>
-    </div>
-
-    <div class="features">
-        <p>Application Features - Click here to learn more!</p>
-        <div class="additional-content" >
-            <p>This is an application that takes your url, and maps out your threat landscape. An incredibly useful tool in understanding how to make your organization, safer! </p>
-        </div>
-    </div>
-
-    <div class="threat-landscape">
-        <p>Content for Threat Landscape - Click here to learn more!</p>
-        <div class="additional-content" >
-            <p>What is the threat landscape?</p>
-            <p>How do we define it></p>
-            <p>Why should you care?</p>
-        </div>
-    </div>
-
-    <div class="cvss-feed">
-        <p>CVSS FEED API - Click here to check the latest feed!</p>
-        <div class="additional-content">
-        </div>
-    </div>
-</main>
-
-  <footer>
-    <p>&copy; RiskRadar</p>
-  </footer>
-<script src="index.js"></script>
+  <div id="root"></div>
+  <script type="module" src="index.js"></script>
 </body>
 </html>
