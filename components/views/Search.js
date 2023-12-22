@@ -1,10 +1,14 @@
 import html from "html-literal";
 
-export default () => html`
-  <main class="search-form">
-    <p>
-      This is where the Search Functionality will be, Insert the URL Search and
-      get the API Call back
-    </p>
-  </main>
+export default state => html`
+  <form id="urlForm">
+    <label for="urlInput">Enter URL:</label>
+    <input type="text" id="urlInput" />
+    <button type="submit">Search</button>
+  </form>
+  <div id="results">
+    ${state.domainDetails
+      ? `<p>Results: ${JSON.stringify(state.domainDetails)}</p>`
+      : "<p>No results found.</p>"}
+  </div>
 `;
