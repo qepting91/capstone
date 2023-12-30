@@ -16,27 +16,45 @@ function render(state = store.Home) {
   `;
 
   router.updatePageLinks();
-  afterRender();
+  afterRender(state);
 }
 
-function afterRender() {
-  document.querySelector(".fa-bars").addEventListener("click", () => {
-    document.querySelector("nav > ul").classList.toggle("hidden--mobile");
-    console.log("afterRender called. Current page:", store.currentPage);
-  });
-
-  if (store.currentPage === "Search") {
-    handleSearchSubmit();
+function afterRender(state) {
+  const toggleIcon = document.querySelector(".fa-regular.fa-compass");
+  console.log("Toggle Icon:", toggleIcon);
+  if (toggleIcon) {
+    toggleIcon.addEventListener("click", () => {
+      // Select the <ul> element
+      const navList = document.querySelector("nav > ul");
+      console.log("Nav List:", navList);
+      if (navList) {
+        // Toggle classes individually
+        navList.classList.toggle("hidden--mobile");
+        navList.classList.toggle("nav-links");
+      }
+    });
+  } else {
+    console.error("Toggle icon not found");
   }
+
+  const form = document.querySelector("#urlForm");
+  if (form) {
+    form.addEventListener("submit", handleSearchSubmit);
+  } else {
+    console.error("Form #urlForm not found on this page.");
+  }
+
+  console.log("afterRender called. Current page:", state.view === "View");
 }
 
-function handleSearchSubmit() {
-  document.querySelector("#urlForm").addEventListener("submit", e => {
-    e.preventDefault();
-    const urlToSearch = document.querySelector("#urlInput").value;
-    console.log("Form submitted. URL to search:", urlToSearch);
-    searchDomain(urlToSearch);
-  });
+function handleSearchSubmit(e) {
+  e.preventDefault();
+
+  const urlInput = e.target.elements.urlInput;
+  const urlToSearch = urlInput ? urlInput.value : '""';
+  console.log("Form submitted. URL to search:", urlToSearch);
+
+  searchDomain(urlToSearch);
 }
 
 function searchDomain(url) {
