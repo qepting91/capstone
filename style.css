@@ -49,6 +49,7 @@ Header section including the navbar
   height: 30px;
  }
 
+
 nav ul {
   list-style-type: none;
   margin: 0;
@@ -341,7 +342,35 @@ footer {
 /* =====================================================================
    Media Queries
 ===================================================================== */
-@media (min-width: 768px) {
+@media (max-width: 769px) {
+header {
+  height: auto;
+}
+
+.fa-compass, .far, .fas {  /* Adjust based on the correct class for FontAwesome */
+  display: block;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 1.5em;
+  color: var(--isabelline);
+  height: auto;
+}
+
+nav ul {
+  display: none;
+  flex-direction: column;
+  width: 100%;
+}
+
+nav ul.is-active {
+  display: flex;
+}
+
+nav {
+  flex-direction: column;
+  align-items: center;
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -359,4 +388,20 @@ main {
   max-width: 100%;
   padding: 10px;
 }
+
+@media (min-width: 768px) {
+  .fa-compass, .far, .fas {  /* Hide the compass icon on larger screens */
+    display: flex;
+    color: var(--isabelline)
+  }
+
+  nav ul {
+    display: flex;
+    justify-content: space-evenly;
+    color: var(--isabelline)
+  }
+
+  nav {
+    flex-direction: row;
+  }
 }
