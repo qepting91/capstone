@@ -1,14 +1,17 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import articles from "./routers/articles";
+import articles from "./routers/articles.js";
 // Load environment variables from .env file
 dotenv.config();
 
 const app = express();
 
-mongoose.connect(process.env.MONGODB, {
-  // Configuration options to remove deprecation warnings, just include them to remove clutter
+mongoose.set("debug", true);
+
+const MONGODB = process.env.MONGODB || "mongodb://localhost/article";
+
+mongoose.connect(MONGODB, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
