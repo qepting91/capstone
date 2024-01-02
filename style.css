@@ -24,7 +24,7 @@ body {
 Header section including the navbar
 ===================================================================== */
 #jumbotron {
-  background: url(./images/RRlogo.png) center center no-repeat;  background-size: cover;
+  background: url(./images/RRlogo.png) center center no-repeat;
   background-size: contain;
   display: flex;
   flex-direction: column;
@@ -37,7 +37,7 @@ Header section including the navbar
 #jumbotron > h2 {
   color: white;
   text-align: center;
-
+  font-size: medium;
 }
 
  header {
@@ -46,38 +46,10 @@ Header section including the navbar
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 30px;
+  min-height: 30px;
+  font-size: medium;
+  margin-bottom: 0;
  }
-
-
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-nav {
-  display: flex;
-  flex-direction: row;
-  background-color: var(--gunmetal);
-  padding: 10px 10px;
-  height: auto;
-}
-
-nav li {
-  margin: 0 15px;
-}
-
-nav li:last-child {
-  margin-right: 0;
-}
-
-nav a {
-  border: 2px solid var(--orange);
-  padding: 2px 2px;
-  margin: 5px;
-  border-radius: 14px;
-}
 
 a {
   color: var(--isabelline);
@@ -342,66 +314,98 @@ footer {
 /* =====================================================================
    Media Queries
 ===================================================================== */
-@media (max-width: 769px) {
-header {
-  height: auto;
-}
-
-.fa-compass, .far, .fas {  /* Adjust based on the correct class for FontAwesome */
-  display: block;
-  cursor: pointer;
-  padding: 10px;
-  font-size: 1.5em;
-  color: var(--isabelline);
-  height: auto;
-}
-
-nav ul {
-  display: none;
-  flex-direction: column;
-  width: 100%;
-}
-
-nav ul.is-active {
-  display: flex;
-}
-
-nav {
-  flex-direction: column;
-  align-items: center;
-}
-
-main {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: flex-start;
-}
-#fs-frm {
-  max-width: 500px;
-}
-.about-main {
-  flex-direction: column;
-  align-items: stretch;
-}
-.about-project, .about-me, .next-steps {
-  max-width: 100%;
-  padding: 10px;
-}
-
-@media (min-width: 768px) {
-  .fa-compass, .far, .fas {  /* Hide the compass icon on larger screens */
-    display: flex;
-    color: var(--isabelline)
+@media (max-width: 768px) {
+  .hidden--mobile {
+    display: none !important;
   }
 
-  nav ul {
-    display: flex;
-    justify-content: space-evenly;
-    color: var(--isabelline)
+  .fa-regular.fa-compass {
+    color: var(--orange);
+    text-shadow: 2px 2px var(--isabelline);
   }
 
   nav {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--gunmetal);
+    color: var(--isabelline);
+    margin-top: 0;
+  }
+
+  nav > i {
+    padding: 1rem;
+    font-size: 2em;
+  }
+
+  nav > ul {
+    display: flex;
+    align-items: center;
     flex-direction: row;
+    padding: 0 0;
+  }
+
+  nav > ul > li {
+    padding: 0.5rem;
+    list-style-type: none;
+  }
+  main {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  #fs-frm {
+    max-width: 500px;
+  }
+  .about-main {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .about-project, .about-me, .next-steps {
+    max-width: 100%;
+    padding: 10px;
+  }
+}
+
+@media (min-width: 769px) {
+  .hidden--mobile {
+    background-color: var(--gunmetal);
+    margin-top: 0;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--gunmetal);
+    color: var(--isabelline);
+    margin-top: 0;
+  }
+
+  nav > ul {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0 0;
+  }
+
+  nav > ul > li {
+    display: inline-block;
+    text-decoration: none;
+    border: 1px solid;
+    padding: 0.5rem 0.5rem;
+    border-radius: 25px;
+  }
+
+  nav > ul > li:hover {
+    border:  1px var(--orange) solid;
+  }
+
+  nav > ul > li :hover {
+    color: red;
+  }
+
+  nav > .fa-compass {
+    display: none;
   }
 }
