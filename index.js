@@ -60,14 +60,8 @@ function handleSearchSubmit(e) {
 function searchDomain(url) {
   console.log(`Initiating API call with URL: ${url}`);
   axios
-    .get(
-      `https://fullhunt.io/api/v1/domain/${encodeURIComponent(url)}/details`,
-      {
-        headers: {
-          "X-API-KEY": process.env.FullHunt_API
-        }
-      }
-    )
+    .get(`/fullhunt/${encodeURIComponent(url)}`)
+
     .then(response => {
       console.log("API call successful. Response data:", response.data);
       store.Search.domainDetails = response.data;
@@ -79,6 +73,22 @@ function searchDomain(url) {
       render(store.Search);
     });
 }
+function fetchArticles() {
+  console.log("Initiating API call to fetch articles");
+  axios
+    .get(`${process.env.ARTICLE_API}/articles`) // Make sure your environment variable is correctly set
+    .then(response => {
+      console.log("API call successful. Response data:", response.data);
+      store.Article.articles = response.data;
+      render(store.Article);
+    })
+    .catch(error => {
+      console.error("Error fetching articles:", error);
+      render(store.Article);
+    });
+}
+
+export default fetchArticles;
 
 router.hooks({
   before: (done, params) => {
