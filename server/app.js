@@ -1,7 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import articles from "./routers/articles.js";
+import articlesRouter from "./routers/articles.js";
+import axios from "axios";
 // Load environment variables from .env file
 dotenv.config();
 
@@ -53,6 +54,22 @@ app.use(express.json());
 app.use(cors);
 app.use(logging);
 
+// Proxy endpoint
+app.get("/fullhunt/:domain", async (req, res) => {
+  const domain = req.params.domain;
+  const fullHuntUrl = `https://fullhunt.io/api/v1/domain/${domain}/details`;
+
+  try {
+    const response = await axios.get(fullHuntUrl, {
+      headers: { "X-API-KEY": process.env.FULLHUNT_API_KEY } // Store your API key in .env
+    });
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error fetching from FullHunt:", error);
+    res.status(500).json({ message: "Failed to fetch data from FullHunt" });
+  }
+});
+
 // NOTE: MIDDLEWARE GOES BEFORE THE CREATION OF THE ROUTES :)
 
 // Request handlers go here
@@ -61,7 +78,7 @@ app.get("/status", (request, response) => {
 });
 
 // Create a new route for articles
-app.use("/articles", articles);
+app.use("/articles", articlesRouter);
 
 // Create a new route to handle 3rd party api FullHunt
 

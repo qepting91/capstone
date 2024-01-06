@@ -33,6 +33,7 @@
     "lodash": "^4.17.21",
     "mongoose": "^6.12.4",
     "navigo": "^8.11.1",
+    "node-cron": "^3.0.3",
     "node-fetch": "^3.3.2",
     "parcel": "^2.10.3",
     "rss-parser": "^3.13.0"
