@@ -10,7 +10,7 @@ function render(state = store.Home) {
   console.log("Rendering state:", state);
   document.querySelector("#root").innerHTML = `
     ${Header(state)}
-    ${Nav(store.Links)}
+    ${Nav(store.Links, state)}
     ${Main(state)}
     ${Footer()}
   `;
@@ -20,23 +20,21 @@ function render(state = store.Home) {
 }
 
 function afterRender(state) {
-  const toggleIcon = document.querySelector(".fa-regular.fa-compass");
-  console.log("Toggle Icon:", toggleIcon);
-  if (toggleIcon) {
-    toggleIcon.addEventListener("click", () => {
-      // Select the <ul> element
-      const navList = document.querySelector("nav > ul");
-      console.log("Nav List:", navList);
-      if (navList) {
-        // Toggle classes individually
-        navList.classList.toggle("hidden--mobile");
-        navList.classList.toggle("nav-links");
-      }
+  console.log("After Render called for state:", state);
+  document
+    .querySelector(".fa-regular.fa-compass")
+    .addEventListener("click", () => {
+      document.querySelector("nav > ul").classList.toggle("hidden--mobile");
     });
-  } else {
-    console.error("Toggle icon not found");
-  }
 
+  if (state.view === "Home") {
+    // Do this stuff
+    document.getElementById("Search Here").addEventListener("click", event => {
+      event.preventDefault();
+
+      router.navigate("/Search");
+    });
+  }
   const form = document.querySelector("#urlForm");
   if (form) {
     form.addEventListener("submit", handleSearchSubmit);
@@ -51,7 +49,7 @@ function handleSearchSubmit(e) {
   e.preventDefault();
 
   const urlInput = e.target.elements.urlInput;
-  const urlToSearch = urlInput ? urlInput.value : '""';
+  const urlToSearch = urlInput ? urlInput.value : "";
   console.log("Form submitted. URL to search:", urlToSearch);
 
   searchDomain(urlToSearch);
@@ -61,7 +59,6 @@ function searchDomain(url) {
   console.log(`Initiating API call with URL: ${url}`);
   axios
     .get(`/fullhunt/${encodeURIComponent(url)}`)
-
     .then(response => {
       console.log("API call successful. Response data:", response.data);
       store.Search.domainDetails = response.data;
@@ -75,7 +72,7 @@ function searchDomain(url) {
 }
 function fetchArticles() {
   console.log("Initiating API call to fetch articles");
-  axios
+  return axios
     .get(`${process.env.ARTICLE_API}/articles`) // Make sure your environment variable is correctly set
     .then(response => {
       console.log("API call successful. Response data:", response.data);
@@ -92,13 +89,20 @@ export default fetchArticles;
 
 router.hooks({
   before: (done, params) => {
+    console.log("Router 'before' hook for params:", params);
     const view =
       params && params.data && params.data.view
         ? capitalize(params.data.view)
         : "Search";
+    console.log("before hook called for view:", view);
 
     if (view === "Search") {
       done();
+    } else if (view === "Article") {
+      fetchArticles().then(() => {
+        console.log("Articles fetched, proceeding with rendering...");
+        done();
+      });
     } else {
       // ... other view handling ...
       done();
@@ -108,8 +112,9 @@ router.hooks({
     const view =
       params && params.data && params.data.view
         ? capitalize(params.data.view)
-        : "Search";
-    render(store[view] || store.Search);
+        : "Home";
+
+    render(store[view]);
   }
 });
 
@@ -121,14 +126,12 @@ router
       if (view in store) {
         render(store[view]);
       } else {
-        render(store.Viewnotfound);
-        console.log(`View ${view} not defined`);
+        if (store.Viewnotfound) {
+          render(store.Viewnotfound);
+        } else {
+          console.error("Viewnotfound not defined");
+        }
       }
     }
   })
   .resolve();
-
-// add menu toggle to bars icon in nav bar
-// document.querySelector(".fa-bars").addEventListener("click", () => {
-//   document.querySelector("nav > ul").classList.toggle("hidden--mobile");
-// });

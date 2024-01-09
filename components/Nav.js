@@ -1,7 +1,7 @@
 import html from "html-literal";
 export default links => html`
   <nav>
-    <i class="fa-regular fa-compass"></i>
+    <i class="fa-regular fa-compass"></i> Click Here
     <ul class="hidden--mobile nav-links">
       ${links
         .map(
