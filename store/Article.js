@@ -1,5 +1,6 @@
+console.log("articles loaded.");
 export default {
   header: "CISA News",
-  view: "CISA News",
+  view: "Article",
   articles: []
 };
