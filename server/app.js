@@ -29,11 +29,17 @@ const PORT = process.env.PORT || 4040;
 
 // CORS Middleware
 const cors = (req, res, next) => {
+  // Allow only your Netlify frontend domain
+  const allowedOrigins = ["https://riskradar.netlify.app"];
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "X-Requested-With,content-type, Accept,Authorization,Origin"
+    "X-Requested-With, Content-Type, Accept, Authorization, Origin"
   );
-  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
