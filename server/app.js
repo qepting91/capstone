@@ -55,18 +55,21 @@ app.use(cors);
 app.use(logging);
 
 // Proxy endpoint
-app.get("/fullhunt/:domain", async (req, res) => {
-  const domain = req.params.domain;
-  const fullHuntUrl = `https://fullhunt.io/api/v1/domain/${domain}/details`;
-
+app.post("/api/search", async (req, res) => {
   try {
-    const response = await axios.get(fullHuntUrl, {
-      headers: { "X-API-KEY": process.env.FULLHUNT_API_KEY } // Store your API key in .env
-    });
+    const url = req.body.url;
+    const response = await axios.get(
+      `https://fullhunt.io/api/v1/domain/${encodeURIComponent(url)}/details`,
+      {
+        headers: {
+          "X-API-KEY": process.env.FullHunt_API
+        }
+      }
+    );
     res.json(response.data);
   } catch (error) {
-    console.error("Error fetching from FullHunt:", error);
-    res.status(500).json({ message: "Failed to fetch data from FullHunt" });
+    console.error("Error in FullHunt API call:", error);
+    res.status(500).send("Error fetching data");
   }
 });
 

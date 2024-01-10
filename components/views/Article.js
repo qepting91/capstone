@@ -4,14 +4,17 @@ export default state => html`
   <table id="articles">
     <tr>
       <th>Title</th>
-      <th>Link</th>
       <th>Published</th>
-      <th>Description</th>
-      <th>Creator</th>
     </tr>
     ${state.articles
       .map(article => {
-        return `<tr><td>${article.title}</td><td>${article.link}</td><td>${article.published}</td><td>${article.description}</td><td>${article.creator}</td></tr>`;
+        const date = new Date(article.published);
+        const formattedDate = `${date.getMonth() +
+          1}-${date.getDate()}-${date.getFullYear()}`;
+        return `<tr>
+                  <td><a href="${article.link}" target="_blank">${article.title}</a></td>
+                  <td>${formattedDate}</td>
+                </tr>`;
       })
       .join("")}
   </table>
