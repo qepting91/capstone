@@ -6,9 +6,6 @@ export default () => html`
   <main class="index">
     <aside>
       <h2>Asset Discovery!</h2>
-      <a href="/search.html" class="search-button"
-        >Click Here to Search your URL</a
-      >
       <h3>Features</h3>
       <ul>
         <li>Create an Asset Inventory List</li>

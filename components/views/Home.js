@@ -2,6 +2,6 @@ import html from "html-literal";
 
 export default () => html`
   <section id="jumbotron">
-    <h2>Where are your Vulnerabilities?</h2>
+    <a id="callToAction">"Where are your Vulnerabilities?"</a>
   </section>
 `;
