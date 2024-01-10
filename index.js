@@ -56,7 +56,9 @@ function handleSearchSubmit(e) {
   const urlToSearch = urlInput ? urlInput.value : "";
 
   axios
-    .post("/api/search", { url: urlToSearch })
+    .post("https://article-api-lp1o.onrender.com/api/search", {
+      url: urlToSearch
+    })
     .then(response => {
       console.log("Data from FullHunt:", response.data);
     })
