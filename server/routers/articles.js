@@ -5,7 +5,7 @@ import cron from "node-cron";
 
 const router = Router();
 const parser = new RSSParser();
-const xmlURL = "https://www.cisa.gov/news.xml";
+const xmlURL = "https://www.cisa.gov/cybersecurity-advisories/all.xml";
 
 // Function to fetch and parse XML from URL
 async function fetchAndParseXML() {
