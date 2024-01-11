@@ -5,11 +5,12 @@ import cron from "node-cron";
 
 const router = Router();
 const parser = new RSSParser();
+const xmlURL = "https://www.cisa.gov/news.xml";
 
-// Fetch and Parse XML Function
+// Function to fetch and parse XML from URL
 async function fetchAndParseXML() {
   try {
-    const feed = await parser.parseURL("https://www.cisa.gov/news.xml");
+    const feed = await parser.parseURL(xmlURL);
     return feed.items;
   } catch (error) {
     console.error("Failed to fetch or parse XML:", error);
@@ -17,19 +18,28 @@ async function fetchAndParseXML() {
   }
 }
 
-// Save Articles to DB Function
-async function saveArticlesToDB(articles) {
+// Function to check if an article exists in the DB
+async function doesArticleExist(link) {
+  return await Article.findOne({ link });
+}
+
+// Function to save a single article to the DB
+async function saveArticle(item) {
+  const newArticle = new Article({
+    title: item.title,
+    link: item.link,
+    published: item.isoDate,
+    description: item.contentSnippet || item.content
+  });
+  await newArticle.save();
+}
+
+// Function to process and save articles
+async function processAndSaveArticles(articles) {
   for (const item of articles) {
     try {
-      const exists = await Article.findOne({ link: item.link });
-      if (!exists) {
-        const newArticle = new Article({
-          title: item.title,
-          link: item.link,
-          published: item.isoDate,
-          description: item.contentSnippet || item.content
-        });
-        await newArticle.save();
+      if (!(await doesArticleExist(item.link))) {
+        await saveArticle(item);
       }
     } catch (error) {
       console.error("Failed to save article:", error);
@@ -37,23 +47,14 @@ async function saveArticlesToDB(articles) {
   }
 }
 
-// async function initialFetchAndSave() {
-//   console.log("Performing initial fetch and save of articles...");
-//   const articles = await fetchAndParseXML();
-//   await saveArticlesToDB(articles);
-//   console.log("Initial fetch and save complete.");
-// }
-
-// Call the function to perform the initial fetch and save
-// initialFetchAndSave();
 // Scheduled Task for Updating Articles Daily
-cron.schedule("0 0 * * *", async () => {
+cron.schedule("0 1 * * *", async () => {
   console.log("Updating articles...");
   const articles = await fetchAndParseXML();
-  await saveArticlesToDB(articles);
+  await processAndSaveArticles(articles);
 });
 
-// Route to get all articles
+// Get all articles
 router.get("/", async (req, res) => {
   try {
     const articles = await Article.find().sort({ published: -1 });
@@ -63,51 +64,33 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Add new article
 router.post("/", async (req, res) => {
-  const article = new Article({
-    title: req.body.title,
-    link: req.body.link,
-    published: new Date(req.body.published), // Make sure to parse the date
-    description: req.body.description,
-    creator: req.body.creator
-  });
-
   try {
-    const newArticle = await article.save();
+    const newArticle = await saveArticle(req.body);
     res.status(201).json(newArticle);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-// Route to get an article by ID
-router.get("/:id", getArticle, (req, res) => {
-  res.json(res.article);
-});
-
-router.get("/dates", async (req, res) => {
-  try {
-    // Fetch all articles and sort them by the 'published' field in descending order
-    const articles = await Article.find().sort({ published: -1 });
-    res.json(articles);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
 // Middleware to get an article by ID
 async function getArticle(req, res, next) {
-  let article;
   try {
-    article = await Article.findById(req.params.id);
-    if (article == null) {
+    const article = await Article.findById(req.params.id);
+    if (!article) {
       return res.status(404).json({ message: "Cannot find article" });
     }
+    res.article = article;
+    next();
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
-
-  res.article = article;
-  next();
 }
+
+// Get an article by ID
+router.get("/:id", getArticle, (req, res) => {
+  res.json(res.article);
+});
 
 export default router;
