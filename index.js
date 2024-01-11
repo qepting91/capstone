@@ -61,9 +61,11 @@ function handleSearchSubmit(e) {
     })
     .then(response => {
       console.log("Data from FullHunt:", response.data);
+      store.updateState({ domainDetails: response.data });
     })
     .catch(error => {
       console.error("Error fetching domain details:", error);
+      store.updateState({ error: error.message });
     });
 }
 
