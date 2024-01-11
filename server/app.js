@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import articlesRouter from "./routers/articles.js";
+import articles from "./routers/articles.js";
 import axios from "axios";
 // Load environment variables from .env file
 dotenv.config();
@@ -87,7 +87,7 @@ app.get("/status", (request, response) => {
 });
 
 // Create a new route for articles
-app.use("/articles", articlesRouter);
+app.use("/articles", articles);
 
 // Create a new route to handle 3rd party api FullHunt
 
