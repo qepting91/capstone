@@ -2,126 +2,133 @@ import { Header, Nav, Main, Footer } from "./components";
 import * as store from "./store";
 import Navigo from "navigo";
 import { capitalize } from "lodash";
-import { fetchArticles, handleSearchSubmit } from "./api";
+import axios from "axios";
 
 const router = new Navigo("/");
 
-async function render(state) {
-  try {
-    document.querySelector("#root").innerHTML = `${Header(state)}${Nav(
-      state
-    )}${Main(state)}${Footer(state)}`;
-    await afterRender(state);
-  } catch (error) {
-    console.error("Render Error:", error);
-    displayError("An error occurred while rendering the page.");
-  }
+function render(state = store.Home) {
+  console.log("Rendering state:", state);
+  document.querySelector("#root").innerHTML = `
+    ${Header(state)}
+    ${Nav(store.Links, state)}
+    ${Main(state)}
+    ${Footer()}
+  `;
+
+  router.updatePageLinks();
+  afterRender(state);
 }
 
-async function afterRender(state) {
-  commonEventHandlers();
-  await specificViewHandlers(state);
-}
+function afterRender(state) {
+  console.log("After Render called for state:", state);
 
-function commonEventHandlers() {
+  // Ensure elements exist before adding event listeners
   const compassElement = document.querySelector(".fa-regular.fa-compass");
   if (compassElement) {
-    compassElement.addEventListener("click", toggleMobileMenu);
-  }
-}
-
-function toggleMobileMenu() {
-  document.querySelector("nav > ul").classList.toggle("hidden--mobile");
-}
-
-async function specificViewHandlers(state) {
-  const viewHandlers = {
-    Home: homeViewHandlers,
-    Article: articleViewHandlers,
-    Contact: contactViewHandlers,
-    Search: searchViewHandlers
-  };
-
-  if (viewHandlers[state.view]) {
-    await viewHandlers[state.view]();
-  }
-}
-
-function displayError(message) {
-  const errorContainer = document.getElementById("error-container");
-  if (errorContainer) {
-    errorContainer.textContent = message;
-    errorContainer.style.display = "block";
-  } else {
-    console.error("Error container not found in DOM.");
-  }
-}
-
-async function homeViewHandlers() {
-  try {
-    const articles = await fetchArticles();
-    const articlesContainer = document.getElementById("articles-container");
-    if (articlesContainer) {
-      articlesContainer.innerHTML = articles
-        .map(
-          article => `
-                <article>
-                    <h2>${article.title}</h2>
-                    <p>${article.summary}</p>
-                    <!-- Add more article details here -->
-                </article>
-            `
-        )
-        .join("");
-    }
-  } catch (error) {
-    console.error("Error in Home View:", error);
-    displayError("Unable to load articles.");
-  }
-}
-
-async function articleViewHandlers() {
-  // Since the Article view only displays articles, no specific event handlers are needed here.
-}
-
-async function contactViewHandlers() {
-  const contactForm = document.getElementById("contact-form");
-  if (contactForm) {
-    contactForm.addEventListener("submit", event => {
-      event.preventDefault();
-      // Handle the form submission here
-      // Example: const formData = new FormData(contactForm);
-      // Send formData to a server or handle it as needed
+    compassElement.addEventListener("click", () => {
+      document.querySelector("nav > ul").classList.toggle("hidden--mobile");
     });
   }
-}
 
-async function searchViewHandlers() {
-  const searchForm = document.getElementById("search-form");
-  if (searchForm) {
-    searchForm.addEventListener("submit", handleSearchSubmit);
-  }
-}
-
-router.hooks({
-  before: async (done, params) => {
-    if (params && params.view) {
-      const capitalizedView = capitalize(params.view);
-      if (store.Page[capitalizedView]) {
-        store.Page.currentView = capitalizedView;
-      }
+  if (state.view === "Home") {
+    const callToActionElement = document.getElementById("callToAction");
+    if (callToActionElement) {
+      callToActionElement.addEventListener("click", event => {
+        event.preventDefault();
+        router.navigate("/Search");
+      });
     }
-    done();
+  }
+
+  const form = document.querySelector("#urlForm");
+  if (form) {
+    form.addEventListener("submit", handleSearchSubmit);
+  } else {
+    console.error("Form #urlForm not found on this page.");
+  }
+
+  console.log("afterRender called. Current page:", state.view === "View");
+}
+
+function handleSearchSubmit(e) {
+  e.preventDefault();
+  const urlInput = e.target.elements.urlInput;
+  const urlToSearch = urlInput ? urlInput.value : "";
+
+  axios
+    .post("https://article-api-lp1o.onrender.com/api/search", {
+      url: urlToSearch
+    })
+    .then(response => {
+      console.log("Data from FullHunt:", response.data);
+    })
+    .catch(error => {
+      console.error("Error fetching domain details:", error);
+    });
+}
+
+function fetchArticles() {
+  console.log("Initiating API call to fetch articles");
+  // Assuming the ARTICLE_API is set in the environment where this script runs
+  return axios
+    .get(`${process.env.ARTICLE_API}/articles`)
+    .then(response => {
+      console.log("API call successful. Response data:", response.data);
+      store.Article.articles = response.data;
+      render(store.Article);
+    })
+    .catch(error => {
+      console.error("Error fetching articles:", error);
+      render(store.Article);
+    });
+}
+
+export default fetchArticles;
+
+// Router configuration
+router.hooks({
+  before: (done, params) => {
+    console.log("Router 'before' hook for params:", params);
+    const view =
+      params && params.data && params.data.view
+        ? capitalize(params.data.view)
+        : "Search";
+    console.log("before hook called for view:", view);
+
+    if (view === "Search") {
+      done();
+    } else if (view === "Article") {
+      fetchArticles().then(() => {
+        console.log("Articles fetched, proceeding with rendering...");
+        done();
+      });
+    } else {
+      done();
+    }
+  },
+  already: params => {
+    const view =
+      params && params.data && params.data.view
+        ? capitalize(params.data.view)
+        : "Home";
+    render(store[view]);
   }
 });
 
 router
   .on({
-    "/": () => render(store.Page.Home),
+    "/": () => render(),
     ":view": params => {
-      const viewName = capitalize(params.view);
-      const page = store.Page[viewName];
-      page ? render(page) : render(store.Page.Error404);
+      let view = capitalize(params.data.view);
+      if (view in store) {
+        render(store[view]);
+      } else {
+        if (store.Viewnotfound) {
+          render(store.Viewnotfound);
+        } else {
+          console.error("Viewnotfound not defined");
+        }
+      }
     }
   })
   .resolve();
