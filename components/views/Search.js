@@ -17,23 +17,29 @@ export default state => html`
         provided below.
       </p>
     </div>
-    <section class="detail-section">
-      <h4>Host URL</h4>
-      <p>${state.domainDetails.domain}</p>
-    </section>
-    ${state.domainDetails.hosts.map(
-      host => html`
-        <section class="detail-section">
-          <h4>Host Information</h4>
-          <p><strong>Host URL:</strong> ${host.host}</p>
-          <p><strong>IP Address:</strong> ${host.ip_address}</p>
-          <p><strong>Cloud Provider:</strong> ${host.cloud.provider}</p>
-          <p><strong>Region:</strong> ${host.cloud.region}</p>
-          <p><strong>Live:</strong> ${host.is_live ? "Yes" : "No"}</p>
-          <p><strong>Ports:</strong> ${host.network_ports.join(", ")}</p>
-          <p><strong>Tags:</strong> ${host.tags.join(", ")}</p>
-        </section>
-      `
-    )}
+    ${state.domainDetails
+      ? html`
+          <section class="detail-section">
+            <h4>Host URL</h4>
+            <p>${state.domainDetails.domain}</p>
+          </section>
+          ${state.domainDetails.hosts.map(
+            host => html`
+              <section class="detail-section">
+                <h4>Host Information</h4>
+                <p><strong>Host URL:</strong> ${host.host}</p>
+                <p><strong>IP Address:</strong> ${host.ip_address}</p>
+                <p><strong>Cloud Provider:</strong> ${host.cloud.provider}</p>
+                <p><strong>Region:</strong> ${host.cloud.region}</p>
+                <p><strong>Live:</strong> ${host.is_live ? "Yes" : "No"}</p>
+                <p><strong>Ports:</strong> ${host.network_ports.join(", ")}</p>
+                <p><strong>Tags:</strong> ${host.tags.join(", ")}</p>
+              </section>
+            `
+          )}
+        `
+      : state.isLoading
+      ? `<p>Loading domain details...</p>`
+      : `<p>No domain details available. Please submit a URL to search.</p>`}
   </article>
 `;
