@@ -277,23 +277,46 @@ td a {
   background-color: var(--gunmetal);
 }
 
-/* Results styling */
-#results {
-  max-width: 500px;
-  margin: 20px auto;
-  background: var(--isabelline);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.article-header {
+  background-color: var(--orange);
+  color: white;
+  margin-bottom: 20px;
 }
 
-#results h2, #results h3 {
-  color: var(--orange);
+.article-subtitle {
+  color: #333;
+  font-size: 1.1em;
+  margin-bottom: 10px;
 }
 
-#results p {
+.article-summary {
+  background-color: var(--isabelline);
+  padding: 15px;
+  border-left: 4px solid var(--orange);
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.detail-section {
+  margin-bottom: 20px;
+}
+
+.detail-section h4 {
+  background-color: var(--orange);
+  color: white;
+  margin-bottom: 5px;
+}
+
+.detail-section p {
+  margin: 0;
   font-size: 1em;
-  margin-bottom: 15px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 5px;
 }
 
 /* =====================================================================
