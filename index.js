@@ -62,6 +62,7 @@ function handleSearchSubmit(e) {
     .then(response => {
       console.log("Data from FullHunt:", response.data);
       store.Search.domainDetails = response.data;
+      render(store.Search);
     })
     .catch(error => {
       console.error("Error fetching domain details:", error);
