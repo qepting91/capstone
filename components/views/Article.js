@@ -8,13 +8,16 @@ export default state => html`
     </tr>
     ${state.articles
       .map(article => {
-        const date = new Date(article.published);
-        const formattedDate = `${date.getMonth() +
-          1}-${date.getDate()}-${date.getFullYear()}`;
-        return `<tr>
-                  <td><a href="${article.link}" target="_blank">${article.title}</a></td>
-                  <td>${formattedDate}</td>
-                </tr>`;
+        if (article && article.title && article.link && article.published) {
+          const date = new Date(article.published);
+          const formattedDate = `${date.getMonth() +
+            1}-${date.getDate()}-${date.getFullYear()}`;
+          return `<tr>
+                    <td><a href="${article.link}" target="_blank">${article.title}</a></td>
+                    <td>${formattedDate}</td>
+                  </tr>`;
+        }
+        return ""; // Return an empty string for null or undefined articles
       })
       .join("")}
   </table>
