@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import articles from "./routers/articles.js";
+import articles, { fetchAndProcessArticles } from "./routers/articles.js";
 import axios from "axios";
 // Load environment variables from .env file
 dotenv.config();
@@ -30,7 +30,10 @@ const PORT = process.env.PORT || 4040;
 // CORS Middleware
 const cors = (req, res, next) => {
   // Allow only your Netlify frontend domain
-  const allowedOrigins = ["https://riskradar.netlify.app"];
+  const allowedOrigins = [
+    "https://riskradar.netlify.app",
+    "http://localhost:4040"
+  ];
   const origin = req.headers.origin;
 
   if (allowedOrigins.includes(origin)) {
@@ -80,7 +83,13 @@ app.post("/api/search", async (req, res) => {
 });
 
 // NOTE: MIDDLEWARE GOES BEFORE THE CREATION OF THE ROUTES :)
-
+fetchAndProcessArticles()
+  .then(() => {
+    console.log("Articles fetched on server start-up");
+  })
+  .catch(error => {
+    console.error("Error fetching articles on start-up:", error);
+  });
 // Request handlers go here
 app.get("/status", (request, response) => {
   response.status(200).json({ message: "Service healthy" });
