@@ -262,7 +262,7 @@ td a {
   margin-bottom: 20px;
 }
 
-#urlForm button {
+.button-style {
   display: block;
   width: 100%;
   padding: 10px;
@@ -273,7 +273,7 @@ td a {
   cursor: pointer;
 }
 
-#urlForm button:hover {
+.button-style:hover {
   background-color: var(--gunmetal);
 }
 

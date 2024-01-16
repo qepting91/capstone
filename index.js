@@ -47,6 +47,14 @@ function afterRender(state) {
     console.error("Form #urlForm not found on this page.");
   }
 
+  // Event listener for the Export to CSV button
+  const exportCsvButton = document.getElementById("exportCsvButton");
+  if (exportCsvButton) {
+    exportCsvButton.addEventListener("click", () => {
+      exportToCsv(store.Search.domainDetails.hosts);
+    });
+  }
+
   console.log("afterRender called. Current page:", state.view === "View");
 }
 
@@ -86,6 +94,30 @@ function fetchArticles() {
 }
 
 export default fetchArticles;
+
+function exportToCsv(hosts) {
+  let csvContent = "data:text/csv;charset=utf-8,";
+  csvContent += "Host URL,IP Address,Cloud Provider,Region,Live,Ports,Tags\n"; // Header
+
+  hosts.forEach(host => {
+    let row = [
+      host.host,
+      host.ip_address,
+      host.cloud.provider,
+      host.cloud.region,
+      host.is_live ? "Yes" : "No",
+      host.network_ports.join("; "),
+      host.tags.join("; ")
+    ].join(",");
+    csvContent += row + "\n";
+  });
+
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "domain_details.csv");
+  link.click();
+}
 
 // Router configuration
 router.hooks({
