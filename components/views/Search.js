@@ -6,19 +6,23 @@ export default state => html`
     <input type="text" id="urlInput" />
     <button type="submit" class="button-style">Search</button>
   </form>
-  <article>
-    <h1 class="article-header">Domain Analysis Report</h1>
-    <p class="article-subtitle">
-      Insightful information about your domain landscape
-    </p>
-    <div class="article-summary">
-      <p>
-        Here's a quick overview of your scanned domain. Detailed information is
-        provided below.
-      </p>
-    </div>
-    ${state.domainDetails
-      ? html`
+
+  ${state.domainDetails
+    ? html`
+        <button id="exportCsvButton" class="button-style">
+          Export to CSV
+        </button>
+        <article>
+          <h1 class="article-header">Domain Analysis Report</h1>
+          <p class="article-subtitle">
+            Insightful information about your domain landscape
+          </p>
+          <div class="article-summary">
+            <p>
+              Here's a quick overview of your scanned domain. Detailed
+              information is provided below.
+            </p>
+          </div>
           <section class="detail-section">
             <h4>Host URL</h4>
             <p>${state.domainDetails.domain}</p>
@@ -37,12 +41,9 @@ export default state => html`
               </section>
             `
           )}
-          <button id="exportCsvButton" class="button-style">
-            Export to CSV
-          </button>
-        `
-      : state.isLoading
-      ? `<p>Loading domain details...</p>`
-      : `<p>No domain details available. Please submit a URL to search.</p>`}
-  </article>
+        </article>
+      `
+    : state.isLoading
+    ? `<p>Loading domain details...</p>`
+    : `<p>No domain details available. Please submit a URL to search.</p>`}
 `;
