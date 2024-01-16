@@ -277,6 +277,10 @@ td a {
   background-color: var(--gunmetal);
 }
 
+article {
+  padding-bottom: 30px;
+}
+
 .article-header {
   background-color: var(--orange);
   color: white;
