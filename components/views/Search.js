@@ -4,7 +4,7 @@ export default state => html`
   <form id="urlForm">
     <label for="urlInput">Enter URL:</label>
     <input type="text" id="urlInput" />
-    <button type="submit">Search</button>
+    <button type="submit" class="button-style">Search</button>
   </form>
   <article>
     <h1 class="article-header">Domain Analysis Report</h1>
@@ -37,6 +37,9 @@ export default state => html`
               </section>
             `
           )}
+          <button id="exportCsvButton" class="button-style">
+            Export to CSV
+          </button>
         `
       : state.isLoading
       ? `<p>Loading domain details...</p>`
